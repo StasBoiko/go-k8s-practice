@@ -1,0 +1,71 @@
+name: CD
+
+on:
+  push:
+    branches:
+      - dev
+      - stage
+      - main
+
+jobs:
+  deploy-dev:
+    name: Deploy to Development
+    if: github.ref == 'refs/heads/dev'
+    runs-on: ubuntu-latest
+    environment:
+      name: development
+      url: http://api.dev.local
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Simulate deployment to Development
+        run: |
+          echo "Deploying version ${{ github.sha }} to development environment..."
+          echo "Target namespace: dev"
+          echo "Host: api.dev.local"
+          echo "Simulated rollout restart deployment/api-deployment -n dev"
+          echo "Deployment to development completed successfully."
+
+  deploy-stage:
+    name: Deploy to Staging
+    if: github.ref == 'refs/heads/stage'
+    runs-on: ubuntu-latest
+    environment:
+      name: staging
+      url: http://api.stage.local
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Simulate deployment to Staging
+        run: |
+          echo "Deploying version ${{ github.sha }} to staging environment..."
+          echo "Target namespace: stage"
+          echo "Host: api.stage.local"
+          echo "Simulated rollout restart deployment/api-deployment -n stage"
+          echo "Deployment to staging completed successfully."
+
+  deploy-prod:
+    name: Deploy to Production
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: http://api.prod.local
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Update version in production config
+        run: |
+          echo "Updating version tag in k8s/prod/config.yaml..."
+          sed -i 's/APP_VERSION: .*/APP_VERSION: "${{ github.sha }}"/' k8s/prod/config.yaml
+          cat k8s/prod/config.yaml
+
+      - name: Simulate production deployment and record successful release
+        run: |
+          echo "Deploying version ${{ github.sha }} to production environment..."
+          echo "Target namespace: prod"
+          echo "Host: api.prod.local"
+          echo "Release ${{ github.sha }} recorded and deployed to production successfully."

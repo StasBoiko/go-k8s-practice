@@ -1,6 +1,7 @@
 # Binaries and build artifacts
 /bin/
 bin/
+/api
 dist/
 *.exe
 *.exe~
@@ -10,6 +11,7 @@ dist/
 *.test
 
 # Database and local data
+postgres_data/
 data/
 *_data/
 *.db
