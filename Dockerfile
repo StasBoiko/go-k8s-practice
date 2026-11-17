@@ -1,5 +1,5 @@
-# Builder stage (using alpine matching Go version in go.mod)
-FROM golang:alpine AS builder
+# Builder stage
+FROM golang:1.24-alpine AS builder
 
 WORKDIR /build
 
