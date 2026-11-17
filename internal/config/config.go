@@ -22,7 +22,7 @@ func Load() *Config {
 
 	return &Config{
 		AppEnv:      getEnv("APP_ENV", "local"),
-		AppVersion:  getEnv("APP_VERSION", "0.1.0"),
+		AppVersion:  getEnv("APP_VERSION", "0.2.0"),
 		HTTPPort:    getEnv("HTTP_PORT", "8080"),
 		DatabaseURL: os.Getenv("DATABASE_URL"),
 	}
