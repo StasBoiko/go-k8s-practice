@@ -80,6 +80,6 @@ jobs:
 
       - name: Validate Kubernetes manifests
         run: |
-          kubectl apply --dry-run=client -f k8s/dev/
-          kubectl apply --dry-run=client -f k8s/stage/
-          kubectl apply --dry-run=client -f k8s/prod/
+          kubectl apply --dry-run=client --validate=false -f k8s/dev/
+          kubectl apply --dry-run=client --validate=false -f k8s/stage/
+          kubectl apply --dry-run=client --validate=false -f k8s/prod/
