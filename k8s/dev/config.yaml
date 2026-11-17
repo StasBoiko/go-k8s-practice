@@ -5,7 +5,6 @@ metadata:
   namespace: dev
 data:
   APP_ENV: "dev"
-  APP_VERSION: "0.1.0"
   HTTP_PORT: "8080"
 ---
 apiVersion: v1

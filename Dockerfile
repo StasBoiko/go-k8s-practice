@@ -1,6 +1,8 @@
 # Builder stage
 FROM golang:1.24-alpine AS builder
 
+ARG APP_VERSION=0.2.0
+
 WORKDIR /build
 
 # Cache dependencies
@@ -11,7 +13,9 @@ RUN go mod download
 COPY . .
 
 # Build static binary
-RUN CGO_ENABLED=0 GOOS=linux go build -trimpath -ldflags="-s -w" -o /app/api ./cmd/api
+RUN CGO_ENABLED=0 GOOS=linux go build -trimpath \
+    -ldflags="-s -w -X github.com/StasBoiko/go-k8s-practice/internal/config.DefaultVersion=${APP_VERSION}" \
+    -o /app/api ./cmd/api
 
 # Final stage: distroless static nonroot
 FROM gcr.io/distroless/static-debian12:nonroot

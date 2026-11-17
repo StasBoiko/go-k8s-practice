@@ -7,6 +7,9 @@ import (
 	"github.com/joho/godotenv"
 )
 
+// DefaultVersion is the default application version, which can be overridden at build time via ldflags.
+var DefaultVersion = "0.2.0"
+
 // Config holds all configuration parameters for the application.
 type Config struct {
 	AppEnv      string
@@ -22,7 +25,7 @@ func Load() *Config {
 
 	return &Config{
 		AppEnv:      getEnv("APP_ENV", "local"),
-		AppVersion:  getEnv("APP_VERSION", "0.2.0"),
+		AppVersion:  getEnv("APP_VERSION", DefaultVersion),
 		HTTPPort:    getEnv("HTTP_PORT", "8080"),
 		DatabaseURL: os.Getenv("DATABASE_URL"),
 	}
