@@ -1,0 +1,9 @@
+.git
+.gitignore
+.env
+.env.*
+!.env.example
+bin/
+postgres_data/
+kind-config.yaml
+*.md
