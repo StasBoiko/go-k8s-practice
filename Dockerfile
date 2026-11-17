@@ -1,7 +1,7 @@
 # Builder stage
 FROM golang:1.24-alpine AS builder
 
-ARG APP_VERSION=0.2.0
+ARG APP_VERSION=dev
 
 WORKDIR /build
 

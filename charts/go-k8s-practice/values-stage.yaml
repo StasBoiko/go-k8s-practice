@@ -1,0 +1,4 @@
+env: stage
+replicaCount: 1
+ingress:
+  host: api.stage.local
