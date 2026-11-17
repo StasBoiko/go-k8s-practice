@@ -80,6 +80,5 @@ jobs:
 
       - name: Validate Kubernetes manifests
         run: |
-          kubectl apply --dry-run=client --validate=false -f k8s/dev/
-          kubectl apply --dry-run=client --validate=false -f k8s/stage/
-          kubectl apply --dry-run=client --validate=false -f k8s/prod/
+          curl -sL https://github.com/yannh/kubeconform/releases/latest/download/kubeconform-linux-amd64.tar.gz | sudo tar -xz -C /usr/local/bin kubeconform
+          kubeconform -summary -strict k8s/dev/ k8s/stage/ k8s/prod/
