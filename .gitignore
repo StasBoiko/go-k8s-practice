@@ -1,0 +1,39 @@
+# Binaries and build artifacts
+/bin/
+bin/
+dist/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+
+# Database and local data
+data/
+*_data/
+*.db
+*.sqlite
+*.sqlite3
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# IDE and editor files
+.idea/
+.vscode/
+*.iml
+*.swp
+*.swo
+*~
+
+# Test coverage artifacts
+coverage.out
+coverage.html
+*.out
+
+# OS specific files
+.DS_Store
+Thumbs.db
