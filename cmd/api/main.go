@@ -18,11 +18,12 @@ import (
 	_ "github.com/StasBoiko/go-k8s-practice/docs"
 	"github.com/StasBoiko/go-k8s-practice/internal/config"
 	"github.com/StasBoiko/go-k8s-practice/internal/handler"
+	"github.com/StasBoiko/go-k8s-practice/internal/repository"
 	"github.com/StasBoiko/go-k8s-practice/migrations"
 )
 
 // @title Go K8s Practice API
-// @version 0.1.0
+// @version 0.2.0
 // @description REST API service for Kubernetes practice project.
 // @BasePath /
 func main() {
@@ -78,6 +79,11 @@ func main() {
 
 	healthHandler := handler.NewHealthHandler(cfg, db)
 	mux.HandleFunc("GET /health", healthHandler.Check)
+
+	noteRepo := repository.NewPostgresNoteRepository(db)
+	noteHandler := handler.NewNoteHandler(noteRepo)
+	mux.HandleFunc("POST /notes", noteHandler.Create)
+	mux.HandleFunc("GET /notes", noteHandler.List)
 
 	// Swagger documentation routes
 	mux.HandleFunc("GET /swagger/", httpSwagger.WrapHandler)
