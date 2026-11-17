@@ -1,0 +1,29 @@
+replicaCount: 1
+
+env: dev
+
+image:
+  repository: go-k8s-practice
+  tag: latest
+  pullPolicy: Never
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8080
+
+ingress:
+  enabled: true
+  className: nginx
+  host: api.dev.local
+
+postgres:
+  image: postgres:16-alpine
+  dbName: practice_db
+  user: practice_user
+  password: practice_pass
+  storage: 1Gi
+
+httpPort: 8080
+
+resources: {}

@@ -1,0 +1,11 @@
+env: prod
+replicaCount: 2
+ingress:
+  host: api.prod.local
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 256Mi
