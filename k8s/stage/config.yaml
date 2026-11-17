@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-config
+  namespace: stage
+data:
+  APP_ENV: "stage"
+  HTTP_PORT: "8080"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: api-secret
+  namespace: stage
+type: Opaque
+stringData:
+  DATABASE_URL: "postgres://practice_user:practice_pass@postgres:5432/practice_db?sslmode=disable"

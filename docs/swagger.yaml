@@ -1,0 +1,120 @@
+basePath: /
+definitions:
+  handler.HealthResponse:
+    properties:
+      db_status:
+        example: up
+        type: string
+      env:
+        example: local
+        type: string
+      status:
+        example: ok
+        type: string
+      version:
+        example: 0.1.0
+        type: string
+    type: object
+  model.CreateNoteRequest:
+    properties:
+      content:
+        example: Hello, Kubernetes!
+        type: string
+      title:
+        example: My first note
+        type: string
+    type: object
+  model.ErrorResponse:
+    properties:
+      error:
+        example: title is required
+        type: string
+    type: object
+  model.Note:
+    properties:
+      content:
+        example: Hello, Kubernetes!
+        type: string
+      created_at:
+        example: "2026-11-17T06:00:00Z"
+        type: string
+      id:
+        example: 1
+        type: integer
+      title:
+        example: My first note
+        type: string
+    type: object
+info:
+  contact: {}
+  description: REST API service for Kubernetes practice project.
+  title: Go K8s Practice API
+  version: 0.2.0
+paths:
+  /health:
+    get:
+      description: Returns the system health status, environment, version, and database
+        connectivity status
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.HealthResponse'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/handler.HealthResponse'
+      summary: Health check
+      tags:
+      - health
+  /notes:
+    get:
+      description: Returns an array of all saved notes
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Note'
+            type: array
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      summary: List all notes
+      tags:
+      - notes
+    post:
+      consumes:
+      - application/json
+      description: Creates a new note record with the provided title and content
+      parameters:
+      - description: Note creation payload
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.CreateNoteRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.Note'
+        "400":
+          description: Invalid input data or empty title
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      summary: Create a new note
+      tags:
+      - notes
+swagger: "2.0"
